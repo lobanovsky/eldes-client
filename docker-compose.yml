@@ -1,0 +1,18 @@
+services:
+  eldes-client:
+    image: ${DOCKER_USERNAME}/eldes-client:${TAG}
+    container_name: eldes-client
+    restart: always
+    environment:
+      TZ: Europe/Moscow
+      ELDES_API_URL: ${ELDES_API_URL}
+    ports:
+      - "8092:80"
+    env_file:
+      - .env
+    networks:
+      - housekpr-network
+
+networks:
+  housekpr-network:
+    external: true
