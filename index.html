@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Eldes — Журнал событий</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Auth Screen -->
+  <div id="auth-screen" class="screen">
+    <div class="auth-container">
+      <div class="auth-title">Eldes</div>
+      <div class="auth-subtitle">Журнал событий шлагбаумов</div>
+
+      <p id="login-error" class="error-msg hidden"></p>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label class="form-label" for="login-email">Email</label>
+          <input id="login-email" class="form-input" type="email" placeholder="you@example.com" autocomplete="email" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="login-password">Пароль</label>
+          <input id="login-password" class="form-input" type="password" placeholder="••••••••" autocomplete="current-password" required>
+        </div>
+        <button id="login-btn" class="btn btn-primary btn-full" type="submit">Войти</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- App Screen -->
+  <div id="app-screen" class="screen hidden">
+
+    <!-- Header -->
+    <header class="app-header">
+      <span class="header-title">Журнал событий</span>
+      <button id="logout-btn" class="btn-icon" title="Выйти">&#x2197;&#xFE0E; Выйти</button>
+    </header>
+
+    <!-- Main -->
+    <main class="app-main">
+
+      <!-- Device selector -->
+      <div class="filter-card">
+        <div class="form-group" style="margin-bottom:10px;">
+          <label class="form-label" for="device-select">Устройство</label>
+          <select id="device-select" class="form-input">
+            <option value="">Загрузка...</option>
+          </select>
+        </div>
+
+        <!-- Date range -->
+        <div class="date-row">
+          <div class="form-group">
+            <label class="form-label" for="filter-from">С</label>
+            <input id="filter-from" class="form-input" type="date">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="filter-to">По</label>
+            <input id="filter-to" class="form-input" type="date">
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="action-row">
+          <button id="apply-btn" class="btn btn-primary btn-sm">Применить</button>
+          <button id="sync-btn" class="btn btn-ghost btn-sm">Синхронизировать</button>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <p id="sync-message" class="success-msg hidden"></p>
+      <p id="logs-error" class="error-msg hidden"></p>
+
+      <!-- Loading -->
+      <div id="logs-loading" class="loading-state hidden">
+        <span class="spinner"></span>
+        <p style="margin-top:8px;">Загрузка...</p>
+      </div>
+
+      <!-- Logs table -->
+      <div id="logs-table-wrap" class="logs-card hidden">
+        <div class="logs-table-wrap">
+          <table class="logs-table">
+            <thead>
+              <tr>
+                <th>Дата и время</th>
+                <th>Статус</th>
+                <th>Имя</th>
+                <th>Квартира</th>
+                <th>Метод</th>
+                <th>Телефон</th>
+              </tr>
+            </thead>
+            <tbody id="logs-tbody"></tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <span id="page-info" class="page-info"></span>
+          <div class="pagination-btns">
+            <button id="page-prev" class="btn btn-ghost btn-sm" disabled>&#8592; Назад</button>
+            <button id="page-next" class="btn btn-ghost btn-sm" disabled>Вперёд &#8594;</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/logs.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
