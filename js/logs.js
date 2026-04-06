@@ -40,7 +40,7 @@ function formatPhone(str) {
   if (!str) return '—';
   const digits = String(str).replace(/\D/g, '');
   if (digits.length === 11 && digits[0] === '7') {
-    return `+7-${digits.slice(1, 4)}-${digits.slice(4, 7)}-${digits.slice(7, 9)}-${digits.slice(9, 11)}`;
+    return `+7(${digits.slice(1, 4)})${digits.slice(4, 7)}-${digits.slice(7, 9)}-${digits.slice(9, 11)}`;
   }
   return escHtml(str);
 }
@@ -180,7 +180,7 @@ function renderLogs(entries, page, total) {
       rows.push(`
       <tr>
         <td class="col-time">${formatTime(e.dateTime)}</td>
-        <td class="col-name">${escHtml(e.userName)}</td>
+        <td class="col-name">${escHtml(e.userName ? String(e.userName).slice(0, 7) : '')}</td>
         <td class="col-phone">${phoneCell}</td>
       </tr>`);
     });
