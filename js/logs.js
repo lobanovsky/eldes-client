@@ -45,6 +45,16 @@ function formatPhone(str) {
   return escHtml(str);
 }
 
+// Convert phone to tel: href format: "79991234567" → "+79991234567"
+function toTelHref(str) {
+  if (!str) return null;
+  const digits = String(str).replace(/\D/g, '');
+  if (digits.length === 11 && digits[0] === '7') return `+${digits}`;
+  return digits || null;
+}
+
+const COPY_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2v1"/></svg>`;
+
 // Icon for device option based on zone name
 function deviceIcon(zoneName) {
   const z = (zoneName || '').toLowerCase();
@@ -162,11 +172,16 @@ function renderLogs(entries, page, total) {
         rows.push(`<tr class="date-separator"><td colspan="3">${date}</td></tr>`);
         lastDate = date;
       }
+      const tel = toTelHref(e.phoneNumber);
+      const phoneFormatted = formatPhone(e.phoneNumber);
+      const phoneCell = tel
+        ? `<a href="tel:${tel}" class="phone-link">${phoneFormatted}</a><button class="copy-btn" data-copy="${tel}" title="Копировать">${COPY_ICON}</button>`
+        : phoneFormatted;
       rows.push(`
       <tr>
         <td class="col-time">${formatTime(e.dateTime)}</td>
-        <td>${escHtml(e.userName)}</td>
-        <td class="col-phone">${formatPhone(e.phoneNumber)}</td>
+        <td class="col-name">${escHtml(e.userName)}</td>
+        <td class="col-phone">${phoneCell}</td>
       </tr>`);
     });
     tbody.innerHTML = rows.join('');
@@ -216,6 +231,11 @@ function initLogs() {
   document.getElementById('device-select').addEventListener('change', () => loadLogs(0));
   document.getElementById('filter-date').addEventListener('change', () => loadLogs(0));
   document.getElementById('sync-btn').addEventListener('click', syncLogs);
+  document.getElementById('logs-tbody').addEventListener('click', e => {
+    const btn = e.target.closest('.copy-btn');
+    if (!btn) return;
+    navigator.clipboard.writeText(btn.dataset.copy);
+  });
   document.getElementById('page-prev').addEventListener('click', () => loadLogs(currentPage - 1));
   document.getElementById('page-next').addEventListener('click', () => loadLogs(currentPage + 1));
 }
