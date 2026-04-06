@@ -54,8 +54,8 @@ function formatPhone(str) {
 // Icon for device option based on zone name
 function deviceIcon(zoneName) {
   const z = (zoneName || '').toLowerCase();
-  if (z.includes('паркинг')) return '🚪';
-  if (z.includes('двор')) return '🚧';
+  if (z.includes('паркинг')) return '🅿️';
+  if (z.includes('двор')) return '🚗';
   return '';
 }
 
