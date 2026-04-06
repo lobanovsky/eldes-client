@@ -10,7 +10,8 @@ function escHtml(str) {
 
 // Date helpers
 function toDateStr(date) {
-  return date.toISOString().slice(0, 10);
+  const pad = n => String(n).padStart(2, '0');
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
 }
 
 function today() {
