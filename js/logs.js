@@ -218,6 +218,7 @@ async function syncLogs() {
     await loadLogs(0);
   } catch (err) {
     showLogsError(err.message || 'Ошибка синхронизации');
+    await loadLogs(0);
   } finally {
     syncBtn.disabled = false;
     syncBtn.textContent = 'Синхронизировать';
