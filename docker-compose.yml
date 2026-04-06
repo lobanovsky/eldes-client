@@ -12,7 +12,7 @@ services:
       - .env
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.gate.rule=Host(`gate-log.housekpr.ru`)"
+      - "traefik.http.routers.gate-log.rule=Host(`gate-log.housekpr.ru`)"
     networks:
       - housekpr-network
 
