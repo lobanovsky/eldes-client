@@ -247,7 +247,7 @@ select.form-input {
 }
 .col-phone {
   white-space: nowrap;
-  width: 248px;
+  width: 270px;
   font-variant-numeric: tabular-nums;
 }
 .phone-link {

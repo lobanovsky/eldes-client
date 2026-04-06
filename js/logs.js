@@ -180,7 +180,7 @@ function renderLogs(entries, page, total) {
       rows.push(`
       <tr>
         <td class="col-time">${formatTime(e.dateTime)}</td>
-        <td class="col-name">${escHtml(e.userName ? String(e.userName).slice(0, 7) : '')}</td>
+        <td class="col-name">${escHtml(e.userName)}</td>
         <td class="col-phone">${phoneCell}</td>
       </tr>`);
     });
