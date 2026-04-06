@@ -209,7 +209,9 @@ async function syncLogs() {
 }
 
 function initLogs() {
-  document.getElementById('filter-date').value = today();
+  const filterDate = document.getElementById('filter-date');
+  filterDate.value = today();
+  filterDate.max = today();
 
   document.getElementById('device-select').addEventListener('change', () => loadLogs(0));
   document.getElementById('filter-date').addEventListener('change', () => loadLogs(0));
