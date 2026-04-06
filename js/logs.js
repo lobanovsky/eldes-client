@@ -23,13 +23,40 @@ function defaultTo() {
   return toDateStr(new Date());
 }
 
-// Format datetime: "2024-01-15T10:30:00" → "15.01.2024 10:30"
-function formatDateTime(str) {
+// Format time only: "2024-01-15T10:30:00" → "10:30"
+function formatTime(str) {
   if (!str) return '—';
   const d = new Date(str);
   if (isNaN(d)) return escHtml(str);
   const pad = n => String(n).padStart(2, '0');
-  return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  return `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+// Format date: "2024-01-15T10:30:00" → "15.01.2024"
+function formatDate(str) {
+  if (!str) return '';
+  const d = new Date(str);
+  if (isNaN(d)) return '';
+  const pad = n => String(n).padStart(2, '0');
+  return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()}`;
+}
+
+// Format phone: "79991234567" → "+7-999-123-45-67"
+function formatPhone(str) {
+  if (!str) return '—';
+  const digits = String(str).replace(/\D/g, '');
+  if (digits.length === 11 && digits[0] === '7') {
+    return `+7-${digits.slice(1, 4)}-${digits.slice(4, 7)}-${digits.slice(7, 9)}-${digits.slice(9, 11)}`;
+  }
+  return escHtml(str);
+}
+
+// Icon for device option based on zone name
+function deviceIcon(zoneName) {
+  const z = (zoneName || '').toLowerCase();
+  if (z.includes('паркинг')) return '🚪';
+  if (z.includes('двор')) return '🚧';
+  return '';
 }
 
 // State
@@ -67,15 +94,22 @@ async function loadDevices() {
       return;
     }
 
+    // Find default device: zone "Двор", name contains "Заехать"
+    let defaultDevice = allDevices.find(d =>
+      d.zoneName.toLowerCase().includes('двор') && d.name.toLowerCase().includes('заехать')
+    ) || allDevices[0];
+
     allDevices.forEach(d => {
       const opt = document.createElement('option');
       opt.value = d.id;
-      opt.textContent = `${d.zoneName} / ${d.name}`;
+      const icon = deviceIcon(d.zoneName);
+      opt.textContent = `${icon ? icon + ' ' : ''}${d.zoneName} / ${d.name}`;
+      if (d.id === defaultDevice.id) opt.selected = true;
       sel.appendChild(opt);
     });
 
     sel.disabled = false;
-    currentDeviceId = allDevices[0].id;
+    currentDeviceId = defaultDevice.id;
     await loadLogs(0);
   } catch (err) {
     sel.innerHTML = '<option value="">Ошибка загрузки</option>';
@@ -126,17 +160,25 @@ function renderLogs(entries, page, total) {
   const tbody = document.getElementById('logs-tbody');
 
   if (entries.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="6" class="logs-empty">Нет записей за выбранный период</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="3" class="logs-empty">Нет записей за выбранный период</td></tr>';
   } else {
-    tbody.innerHTML = entries.map(e => `
+    // Group entries by date for date separators
+    let lastDate = null;
+    const rows = [];
+    entries.forEach(e => {
+      const date = formatDate(e.dateTime);
+      if (date && date !== lastDate) {
+        rows.push(`<tr class="date-separator"><td colspan="3">${date}</td></tr>`);
+        lastDate = date;
+      }
+      rows.push(`
       <tr>
-        <td class="col-datetime">${formatDateTime(e.dateTime)}</td>
-        <td class="col-status">${escHtml(e.status)}</td>
+        <td class="col-time">${formatTime(e.dateTime)}</td>
         <td>${escHtml(e.userName)}</td>
-        <td>${escHtml(e.cell)}</td>
-        <td>${escHtml(e.method)}</td>
-        <td>${escHtml(e.phoneNumber)}</td>
-      </tr>`).join('');
+        <td class="col-phone">${formatPhone(e.phoneNumber)}</td>
+      </tr>`);
+    });
+    tbody.innerHTML = rows.join('');
   }
 
   // Pagination info

@@ -222,12 +222,11 @@ select.form-input {
 .logs-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.82rem;
-  min-width: 480px;
+  font-size: 0.85rem;
 }
 .logs-table th {
   background: var(--gray-50);
-  padding: 8px 10px;
+  padding: 8px 12px;
   text-align: left;
   font-weight: 600;
   color: var(--gray-600);
@@ -235,19 +234,35 @@ select.form-input {
   white-space: nowrap;
 }
 .logs-table td {
-  padding: 8px 10px;
+  padding: 8px 12px;
   border-bottom: 1px solid var(--gray-100);
-  vertical-align: top;
+  vertical-align: middle;
   color: var(--gray-800);
 }
 .logs-table tr:last-child td {
   border-bottom: none;
 }
-.logs-table tr:hover td {
+.logs-table tbody tr:hover td {
   background: var(--gray-50);
 }
-.col-datetime { white-space: nowrap; }
-.col-status { white-space: nowrap; }
+.col-time {
+  white-space: nowrap;
+  width: 52px;
+  font-variant-numeric: tabular-nums;
+  color: var(--gray-600);
+}
+.col-phone {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.date-separator td {
+  background: var(--gray-100);
+  color: var(--gray-600);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-bottom: 1px solid var(--gray-200);
+}
 .logs-empty {
   text-align: center;
   color: var(--gray-400);
