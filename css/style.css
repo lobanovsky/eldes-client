@@ -236,7 +236,7 @@ select.form-input {
 }
 .col-time {
   white-space: nowrap;
-  width: 68px;
+  width: 54px;
   font-variant-numeric: tabular-nums;
   color: var(--gray-600);
 }
