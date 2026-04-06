@@ -29,7 +29,7 @@ function formatTime(str) {
   const d = new Date(str);
   if (isNaN(d)) return escHtml(str);
   const pad = n => String(n).padStart(2, '0');
-  return `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
 }
 
 // Format date: "2024-01-15T10:30:00" → "15.01.2024"
