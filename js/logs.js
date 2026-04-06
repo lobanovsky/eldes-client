@@ -13,13 +13,7 @@ function toDateStr(date) {
   return date.toISOString().slice(0, 10);
 }
 
-function defaultFrom() {
-  const d = new Date();
-  d.setDate(d.getDate() - 7);
-  return toDateStr(d);
-}
-
-function defaultTo() {
+function today() {
   return toDateStr(new Date());
 }
 
@@ -67,10 +61,8 @@ let currentTotal = 0;
 const PAGE_SIZE = 50;
 
 function getFilters() {
-  return {
-    from: document.getElementById('filter-from').value || defaultFrom(),
-    to: document.getElementById('filter-to').value || defaultTo(),
-  };
+  const date = document.getElementById('filter-date').value || today();
+  return { from: date, to: date };
 }
 
 // Load devices from /api/private/devices
@@ -145,7 +137,6 @@ function setLogsLoading(loading) {
   document.getElementById('logs-loading').classList.toggle('hidden', !loading);
   document.getElementById('logs-table-wrap').classList.toggle('hidden', loading);
   document.getElementById('logs-error').classList.add('hidden');
-  document.getElementById('apply-btn').disabled = loading;
   document.getElementById('sync-btn').disabled = loading;
 }
 
@@ -218,12 +209,10 @@ async function syncLogs() {
 }
 
 function initLogs() {
-  // Set default date range
-  document.getElementById('filter-from').value = defaultFrom();
-  document.getElementById('filter-to').value = defaultTo();
+  document.getElementById('filter-date').value = today();
 
   document.getElementById('device-select').addEventListener('change', () => loadLogs(0));
-  document.getElementById('apply-btn').addEventListener('click', () => loadLogs(0));
+  document.getElementById('filter-date').addEventListener('change', () => loadLogs(0));
   document.getElementById('sync-btn').addEventListener('click', syncLogs);
   document.getElementById('page-prev').addEventListener('click', () => loadLogs(currentPage - 1));
   document.getElementById('page-next').addEventListener('click', () => loadLogs(currentPage + 1));

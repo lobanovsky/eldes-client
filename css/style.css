@@ -189,22 +189,10 @@ select.form-input {
   margin-bottom: 12px;
   box-shadow: var(--shadow);
 }
-.date-row {
-  display: flex;
-  gap: 8px;
-  align-items: flex-end;
-  margin-bottom: 10px;
-}
-.date-row .form-group {
-  flex: 1;
-  margin-bottom: 0;
-}
 .action-row {
   display: flex;
   gap: 8px;
-}
-.action-row .btn {
-  flex: 1;
+  margin-top: 10px;
 }
 
 /* Logs table */
