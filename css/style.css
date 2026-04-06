@@ -213,6 +213,8 @@ select.form-input {
   font-size: 0.85rem;
   table-layout: fixed;
 }
+.logs-table col:nth-child(1) { width: 26%; }
+.logs-table col:nth-child(3) { width: 46%; }
 .logs-table th {
   background: var(--gray-50);
   padding: 8px 12px;
@@ -236,7 +238,6 @@ select.form-input {
 }
 .col-time {
   white-space: nowrap;
-  width: 45px;
   font-variant-numeric: tabular-nums;
   color: var(--gray-600);
 }
@@ -247,7 +248,6 @@ select.form-input {
 }
 .col-phone {
   white-space: nowrap;
-  width: 270px;
   font-variant-numeric: tabular-nums;
 }
 .phone-link {
