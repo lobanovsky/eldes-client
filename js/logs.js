@@ -188,8 +188,9 @@ function renderLogs(entries, page, total) {
       const phoneCell = tel
         ? `<a href="tel:${tel}" class="phone-link">${phoneFormatted}</a><button class="copy-btn" data-copy="${tel}" title="Копировать">${COPY_ICON}</button>`
         : phoneFormatted;
+      const rowClass = (e.method || '').toLowerCase() === 'progressive_web_apps' ? ' class="row-pwa"' : '';
       rows.push(`
-      <tr>
+      <tr${rowClass}>
         <td class="col-time">${methodIcon(e.method)}${formatTime(e.dateTime)}</td>
         <td class="col-name">${escHtml(e.userName)}</td>
         <td class="col-phone">${phoneCell}</td>

@@ -236,6 +236,12 @@ select.form-input {
 .logs-table tbody tr:hover td {
   background: var(--gray-50);
 }
+.row-pwa td {
+  background: #f0fdf4;
+}
+.row-pwa:hover td {
+  background: #dcfce7;
+}
 .col-time {
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
