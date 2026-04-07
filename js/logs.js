@@ -56,6 +56,16 @@ function toTelHref(str) {
 
 const COPY_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2v1"/></svg>`;
 
+const METHOD_ICONS = {
+  progressive_web_apps: `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" title="Приложение"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><line x1="7" y1="8" x2="7" y2="8.01"/><line x1="12" y1="8" x2="12" y2="8.01"/><line x1="17" y1="8" x2="17" y2="8.01"/><line x1="7" y1="12" x2="7" y2="12.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="17" y1="12" x2="17" y2="12.01"/></svg>`,
+  call: `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" title="Звонок"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>`,
+};
+
+function methodIcon(method) {
+  const icon = METHOD_ICONS[(method || '').toLowerCase()] || null;
+  return icon ? `<span class="method-icon-wrap">${icon}</span>` : '';
+}
+
 // Icon for device option based on zone name
 function deviceIcon(zoneName) {
   const z = (zoneName || '').toLowerCase();
@@ -180,7 +190,7 @@ function renderLogs(entries, page, total) {
         : phoneFormatted;
       rows.push(`
       <tr>
-        <td class="col-time">${formatTime(e.dateTime)}</td>
+        <td class="col-time">${methodIcon(e.method)}${formatTime(e.dateTime)}</td>
         <td class="col-name">${escHtml(e.userName)}</td>
         <td class="col-phone">${phoneCell}</td>
       </tr>`);

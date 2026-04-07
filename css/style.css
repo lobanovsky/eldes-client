@@ -241,6 +241,14 @@ select.form-input {
   font-variant-numeric: tabular-nums;
   color: var(--gray-600);
 }
+.method-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 5px;
+  vertical-align: middle;
+  color: var(--blue);
+  opacity: 0.75;
+}
 .col-name {
   overflow: hidden;
   text-overflow: ellipsis;
