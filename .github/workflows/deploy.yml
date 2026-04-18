@@ -1,4 +1,4 @@
-name: Build and Deploy eldes-client
+name: build-and-deploy-eldes-events-pwa
 
 on:
   push:
